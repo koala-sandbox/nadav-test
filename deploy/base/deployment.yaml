@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nadav-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nadav-test
+  template:
+    spec:
+      containers:
+      - name: nadav-test
+        image: me-west1-docker.pkg.dev/koala-ops-demo-373407/koala-repo/nadav-test:latest
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: nadav-test-configmap
+    metadata:
+      labels:
+        app: nadav-test
